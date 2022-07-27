@@ -8,17 +8,20 @@ class TestGeneralModelParams(TestCase):
         pass
 
     def test_check_models_registered(self):
+        # Make sure all models except those listed in excepted_models are registered
         exempted_models=[]
         for label, model in apps.all_models['ppclp'].items():
             if not model in exempted_models:
                 self.assertTrue(admin.site.is_registered(model),msg=model.__name__ + ' is not registered')
 
     def test_check_models_str(self):
+        # Make sure all models except those listed in excepted_models have __str__ defined
         exempted_models=[]
         for label, model in apps.all_models['ppclp'].items():
             if not model in exempted_models:
-                self.assertFalse(model.__str__ == type(model).__str__, msg=model.__name__ + ' has no __str__ defined')
-
+                m = model()
+                default_str_substring = type(m).__name__ + ' object ('
+                self.assertFalse(m.__str__()[:len(default_str_substring)] == default_str_substring, msg="No __str__ defined for " + type(m).__name__)
 
 class ElementTestCase(TestCase):
     def setUp(self):

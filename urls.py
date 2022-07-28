@@ -5,5 +5,5 @@ from . import views
 app_name = 'ppclp'
 
 urlpatterns = [
-    path('morgan/', views.morgan),
+    path('page/<int:pk>', views.PageDetail.as_view(), name='page-detail'),
 ]

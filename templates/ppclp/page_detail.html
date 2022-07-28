@@ -1,0 +1,15 @@
+{% extends './_base.html' %}
+{% block pagename %}{{ page }}{% endblock %}
+{% block content %}
+{{ page }}
+<div>
+{% for placement in page.elementplacement_set.all %}
+    {% if placement.element.is_heading %}
+        </div>
+        <div class="indent{{ placement.indent }}"><h{{ placement.indent|add:1 }}>{{ placement.element.body }}</h{{ placement.indent|add:1 }}>
+    {% else %}
+        <p>{{ placement.element.body }}</p>
+    {% endif %}
+{% endfor %}
+</div>
+{% endblock %}

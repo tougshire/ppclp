@@ -1,4 +1,5 @@
 {% extends './_base.html' %}
+{% load touglates_tags %}
 {% block pagename %}{{ page }}{% endblock %}
 {% block content %}
 {{ page }}
@@ -6,9 +7,9 @@
 {% for placement in page.elementplacement_set.all %}
     {% if placement.element.is_heading %}
         </div>
-        <div class="indent{{ placement.indent }}"><h{{ placement.indent|add:1 }}>{{ placement.element.body }}</h{{ placement.indent|add:1 }}>
+        <div class="level{{ placement.level }}"><h{{ placement.level|add:1 }}>{{ placement.element.body }}</h{{ placement.level|add:1 }}>
     {% else %}
-        <p>{{ placement.element.body }}</p>
+        <p>{{ placement.element.body | markdown | safe }}</p>
     {% endif %}
 {% endfor %}
 </div>

@@ -2,15 +2,12 @@
 {% load touglates_tags %}
 {% block pagename %}{{ page }}{% endblock %}
 {% block content %}
-{{ page }}
-<div>
-{% for placement in page.elementplacement_set.all %}
-    {% if placement.element.is_heading %}
+{% for element in elements %}
+    <div class="level{{ element.level }}">
+        <h{{ element.level|add:1 }}>{{ element.header_text }}</h{{ element.level|add:1 }}>
+        <div class="contentblock">
+            {{ element.content | safe }}
         </div>
-        <div class="level{{ placement.level }}"><h{{ placement.level|add:1 }}>{{ placement.element.body }}</h{{ placement.level|add:1 }}>
-    {% else %}
-        <p>{{ placement.element.body | markdown | safe }}</p>
-    {% endif %}
+    </div>
 {% endfor %}
-</div>
 {% endblock %}

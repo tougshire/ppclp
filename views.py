@@ -14,17 +14,19 @@ class PageDetail(DetailView):
         context_data = super().get_context_data(**kwargs)
         context_data['elements'] = context_data['page'].element_set.all()
         for el in context_data['elements']:
-            el.content = markdown.markdown(el.content)
+            lv = str(el.level)
+            el.title = '<h' + lv + '>' + el.title + '</h' + lv + '>'
+            el.content = '<div class="content-block">' + markdown.markdown(el.content) + '</div>'
             for i in range(6,0,-1):
                 for header_tag in ['<h', '</h']:
                     header_level = i + el.level
                     if header_level > 6:
                         if header_tag == '<h':
-                            el.content = el.content.replace(header_tag + str(i), '<h6 class="h' + str(header_level) + '"')
+                            el.content = el.content.replace(header_tag + str(i) + '>', '<h6 class="h' + str(header_level) + '">')
                         else:
-                            el.content = el.content.replace(header_tag + str(i), '</h6')  
+                            el.content = el.content.replace(header_tag + str(i) + '>', '</h6>')  
                     else:
-                        el.content = el.content.replace(header_tag + str(i), header_tag + str(header_level))
+                        el.content = el.content.replace(header_tag + str(i) + '>', '</div>' + header_tag + str(header_level) + '><div class="content-block">')
 
         return context_data
         

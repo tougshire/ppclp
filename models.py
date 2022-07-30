@@ -41,7 +41,7 @@ class Element(models.Model):
     level = models.PositiveSmallIntegerField(
         "level",
         default=2,
-        help_text = 'The heading level of this element, corresponding to the html tags <h2> - <h6>.  Note: The default is 2. <h1> is used for the page title'
+        help_text = 'The heading level of this element, corresponding to the html tags &lt;h2&gt; - &lt;h6&gt;.  Note: The default is 2. &lt;h1&gt; is used for the page title'
     )
     content = models.TextField(
         "content",

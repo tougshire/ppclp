@@ -3,11 +3,9 @@
 {% block pagename %}{{ page }}{% endblock %}
 {% block content %}
 {% for element in elements %}
-    <div class="level{{ element.level }}">
-        <h{{ element.level|add:1 }}>{{ element.title }}</h{{ element.level|add:1 }}>
-        <div class="contentblock">
-            {{ element.content | safe }}
-        </div>
+    <div class="element">
+        {{ element.title | safe }}
+        {{ element.content | safe }}
     </div>
 {% endfor %}
 {% endblock %}

@@ -6,7 +6,7 @@ from django.apps import apps
 from django.contrib import admin
 
 
-class TestContentConversion(TestCase):
+class TestPageDetailView(TestCase):
     def setUp(self):
         self.page_one = Page.objects.create(name='First Page')
         self.element_one =Element.objects.create(page=self.page_one, title="Element One", level=2, content="# this should be h3 \n\n plain ***em***")
@@ -16,7 +16,6 @@ class TestContentConversion(TestCase):
         self.element_five =Element.objects.create(page=self.page_one, title="Element Five", level=4, content="### this should be h6 class h7  \n\n plain ***em***")
         self.element_six =Element.objects.create(page=self.page_one, title="Element Five", level=5, content="## this should be h6 class h7 \n\n plain ***em***")
  
-
     def test_check_markdown(self):
         view = PageDetail(object=self.page_one)
         elements = view.get_context_data()['elements']

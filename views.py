@@ -17,6 +17,10 @@ class PageDetail(DetailView):
             lv = str(el.level)
             el.title = '<h' + lv + '>' + el.title + '</h' + lv + '>'
             el.content = '<div class="content-block">' + markdown.markdown(el.content) + '</div>'
+
+            #Push down heading levels within the content so a heading within content is lower than the heading
+            #of the element.  So if the elemnent is level 2, then title is enclosed in h2 tags, and the following code
+            #converts h1 tags in the content to h3
             for i in range(6,0,-1):
                 for header_tag in ['<h', '</h']:
                     header_level = i + el.level

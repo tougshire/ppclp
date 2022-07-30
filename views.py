@@ -17,7 +17,7 @@ class PageDetail(DetailView):
             el.content = markdown.markdown(el.content)
             for i in range(6,0,-1):
                 for header_tag in ['<h', '</h']:
-                    header_level = i + el.level + 1
+                    header_level = i + el.level
                     if header_level > 6:
                         if header_tag == '<h':
                             el.content = el.content.replace(header_tag + str(i), '<h6 class="h' + str(header_level) + '"')

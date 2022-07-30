@@ -27,7 +27,7 @@ class Element(models.Model):
         blank=True,
         help_text = 'The name of the element, seen only by editors'
     )
-    header_text = models.CharField(
+    title = models.CharField(
         max_length=100,
         null=True,
         blank=True,

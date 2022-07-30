@@ -1,9 +1,12 @@
 from django.contrib import admin
 
-from ppclp.models import Element, ElementPlacement, Page
+from ppclp.models import Element, Page
 
-admin.site.register(Element)
+class ElementAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'order']
+    list_editable = ['order']
+
+admin.site.register(Element, ElementAdmin)
 
 admin.site.register(Page)
 
-admin.site.register(ElementPlacement)

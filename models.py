@@ -1,28 +1,5 @@
 from django.db import models
 
-class Element(models.Model):
-    name = models.CharField(
-        "name",
-        max_length=50,
-        help_text="The name - seen only by administrators"
-    )
-    body = models.TextField(
-        "body",
-        blank=True,
-        help_text="The body (using Markdown) of the element"
-    )
-    is_heading = models.BooleanField(
-        'is heading',
-        default=False,
-        help_text = 'If this is a heading or a paragraph'
-    )
-
-    def __str__(self):
-        full_name = '%s: %s' % (self.name, self.body)
-        if len(full_name) > 50:
-            return full_name[:45] + ' ...'
-        else:
-            return full_name
 
 class Page(models.Model):
     name = models.CharField(
@@ -39,29 +16,51 @@ class Page(models.Model):
     def __str__(self):
         return self.name
 
-class ElementPlacement(models.Model):
+class Element(models.Model):
     page = models.ForeignKey(
         Page,
         on_delete=models.CASCADE
     )
-    element = models.ForeignKey(
-        Element,
-        on_delete=models.CASCADE
+    name = models.CharField(
+        "name",
+        max_length=100,
+        blank=True,
+        help_text = 'The name of the element, seen only by editors'
     )
-    rank = models.IntegerField(
-        'rank',
-        help_text = 'The order on the page'
+    header_text = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text = 'The text of the headline for this elememnt'
     )
-    level = models.IntegerField(
-        'level',
+    order = models.IntegerField(
+        "order",
         default=0,
-        help_text = 'The heading level of this placement.  Applies only to headings, not paragraphs'
+        help_text = 'The order in which this element appears on the page'
+    )
+    level = models.PositiveSmallIntegerField(
+        "level",
+        default=2,
+        help_text = 'The heading level of this element, corresponding to the html tags <h2> - <h6>.  Note: The default is 2. <h1> is used for the page title'
+    )
+    content = models.TextField(
+        "content",
+        blank=True,
+        help_text='The content of the block'
+    )
+    date_modified = models.DateField(
+        auto_now=True,
+        help_text='The date of last modification'
     )
 
     def __str__(self):
-        pg = self.page if hasattr(self, 'page') else "Undefined"
-        el = self.element if hasattr(self, 'element') else "Undefined"
-        return '%s on page %s' % (el, pg)
+        full_name = '%s: %s' % (self.name, self.content)
+        if len(full_name) > 75:
+            return full_name[:70] + ' ...'
+        else:
+            return full_name
 
     class Meta:
-        ordering = ['rank']
+        ordering = ['page', 'order', 'level', 'name']
+
+    

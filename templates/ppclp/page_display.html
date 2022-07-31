@@ -7,16 +7,16 @@
 </div>
 {% for menu_item in menu_items %}
     <div class="sidemenu_item">
-        <a href="{% url 'ppclp:element-display' object.pk menu_item.pk %}"  {% if chosen_element.pk == menu_item.pk %} class="chosen"{% endif %} >{{ menu_item.title }}</a>
+        <a href="{% url 'ppclp:placement-display' object.pk menu_item.pk %}"  {% if chosen_placement.pk == menu_item.pk %} class="chosen"{% endif %} >{{ menu_item.element.title }}</a>
     </div>
 {% endfor %}
 {% endblock %}
 {% block content %}
-    {% for element in elements %}
-        {% if chosen_element == element or not chosen_element %}
-        <div class="element">
-            <h{{ element.level }}>{{ element.title }}</h{{ element.level }}>
-            {{ element.content | safe }}
+    {% for placement in placements %}
+        {% if chosen_placement == placement or not chosen_placement %}
+        <div class="placement">
+            <h{{ placement.level }}>{{ placement.element.title }}</h{{ placement.level }}>
+            {{ placement.element.content | safe }}
         </div>
         {% endif %}
     {% endfor %}

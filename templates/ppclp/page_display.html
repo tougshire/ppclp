@@ -1,0 +1,23 @@
+{% extends './_base.html' %}
+{% load touglates_tags %}
+{% block pagename %}{{ page }}{% endblock %}
+{% block sidebar %}
+<div class="sidemenu_item">
+    <a href="{% url 'ppclp:page-display' object.pk %}">All Items</a>
+</div>
+{% for menu_item in menu_items %}
+    <div class="sidemenu_item">
+        <a href="{% url 'ppclp:element-display' object.pk menu_item.pk %}"  {% if chosen_element.pk == menu_item.pk %} class="chosen"{% endif %} >{{ menu_item.title }}</a>
+    </div>
+{% endfor %}
+{% endblock %}
+{% block content %}
+    {% for element in elements %}
+        {% if chosen_element == element or not chosen_element %}
+        <div class="element">
+            <h{{ element.level }}>{{ element.title }}</h{{ element.level }}>
+            {{ element.content | safe }}
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

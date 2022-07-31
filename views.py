@@ -2,20 +2,22 @@ from django import views
 from django.views.generic import DetailView
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Page
+from .models import Element, Page
 import markdown
 
 
-class PageDetail(DetailView):
+class PageDisplay(DetailView):
     model = Page
-    template_name = 'ppclp/page_detail.html'
+    template_name = 'ppclp/page_display.html'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['elements'] = context_data['page'].element_set.all()
+        context_data['menu_items'] = []
+        if 'element_pk' in self.kwargs:
+            context_data['chosen_element'] = Element.objects.get(pk=self.kwargs.get('element_pk'))
         for element in context_data['elements']:
-            element_level_str = str(element.level)
-            element.title = '<h' + element_level_str + '>' + element.title + '</h' + element_level_str + '>'
+            context_data['menu_items'].append(element)
             element.content = '<div class="content-block">' + markdown.markdown(element.content) + '</div>'
 
             #Push down heading levels within the content so a heading within content is lower than the heading

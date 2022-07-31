@@ -1,91 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Suffolk Public Library Landing Page</title>
-		<style type="text/css">
-			#div_header {
-				height:150px;
-				overflow:hidden;
-				object-position: 70% 70%;
-
-			}
-			#div_header img {
-				width:100%;
-				
-			}
-			h2{
-				margin-left: 1rem;
-			}
-			h2 + .content-block {
-				margin-left: 2rem;
-			}
-			h3 {
-				margin-left: 3rem;
-			}
-			h3 + .content-block {
-				margin-left: 4rem;
-			}
-			h4 {
-				margin-left: 5rem;
-			}
-			h4 + .content-block {
-				margin-left: 6rem;
-			}
-			h5 {
-				margin-left: 7rem;
-			}
-			h5 + .content-block {
-				margin-left: 8rem;
-			}
-			h6 {
-				margin-left: 9rem;
-			}
-			h6 + .content-block {
-				margin-left: 10rem;
-			}
-			h6.h7 {
-				margin-left: 11rem;
-			}
-			h6.h7 + .content-block {
-				margin-left: 12rem;
-			}
-			h6.h8 {
-				margin-left: 13rem;
-			}
-			h6.h8 + .content-block {
-				margin-left: 14rem;
-			}
-			h6.h9 {
-				margin-left: 15rem;
-			}
-			h6.h9 + .content-block {
-				margin-left: 16rem;
-			}
-			h6.h10 {
-				margin-left: 17rem;
-			}
-			h6.h10 + .content-block {
-				margin-left: 18rem;
-			}
-			h6.h11 {
-				margin-left: 19rem;
-			}
-			h6.h11 + .content-block {
-				margin-left: 20rem;
-			}
-			h6.h12 {
-				margin-left: 21rem;
-			}
-			h6.h12 + .content-block {
-				margin-left: 22rem;
-			}
-
-</style>
+		<title>Suffolk Public Library Public PC Landing Page</title>
+		<link rel="stylesheet" href="{% static 'ppclp/ppclp.css' %}">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nunito:300,600,700,800,italic,regular|Nunito+Sans:300,600,700,regular|" media="all">
 	</head>
 	<body>
-		<div id="div_header"><img src="https://www.suffolkpubliclibrary.com/ImageRepository/Document?documentID=350"></div>
-		<h1>Suffolk Public Library {% block pagename %}{% endblock %}</h1>
+		<div id="div_header">
+			<img src="{% static 'ppclp/ppclp_banner.png' %}">
+		</div>
+		<h1>Suffolk Public Library Public PC: {% block pagename %}{% endblock %}</h1>
+		<div id="div_sidebar">
+		{% block sidebar %}
+		{% endblock %}
+		</div>
+		<div id="div_content">
 		{% block content %}
 		{% endblock %}
+		</div>
 	</body>
 </html>

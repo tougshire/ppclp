@@ -64,8 +64,8 @@ class Placement(models.Model):
     )
 
     def __str__(self):
-        element = self.element if hasattr(self, 'element') else ''
-        page = self.page if hasattr(self,'page') else ''
+        element = self.element.__str__() if hasattr(self, 'element') else ''
+        page = self.page.__str__() if hasattr(self,'page') else ''
 
         full_str = '%s on %s' % (element, page )
         if len(full_str) > 75:

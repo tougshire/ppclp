@@ -7,7 +7,7 @@
 </div>
 {% for menu_item in menu_items %}
     <div class="sidemenu_item">
-        <a href="{% url 'ppclp:placement-display' object.pk menu_item.pk %}"  {% if chosen_placement.pk == menu_item.pk %} class="chosen"{% endif %} >{{ menu_item.element.title }}</a>
+        <a href="{% url 'ppclp:placement-display' object.pk menu_item.pk %}"  class="menu_item_level_{{ menu_item.level }}" {% if chosen_placement.pk == menu_item.pk %} class="chosen"{% endif %} >{{ menu_item.element.title }}</a>
     </div>
 {% endfor %}
 {% endblock %}

@@ -38,32 +38,40 @@ class PageDisplay(DetailView):
         subplacements = placement.page.placement_set.filter(order__gt=placement.order)
         if subplacements.exists():
              if subplacements.first().level == placement.level + 1:
-                stop=False
                 for subplacement in subplacements:
                     if subplacement.level <= placement.level:
                         break
-                    if subplacement.level == placement.level + 1:
+                    if subplacement.level == placement.level + 1 and subplacement.is_hidden == placement.is_hidden:
+                        print('tp2281e31')
+                        print('tp2281e32', placement)
+                        print('tp2281e33', subplacement)
                         sp_level = str(subplacement.level)
-                        content = '<h' + sp_level + '>' + subplacement.element.title + '</h' + sp_level + '>'
+                        content = content + '<h' + sp_level + '>' + subplacement.element.title + '</h' + sp_level + '>'
                         content = content + self.process_content(subplacement)
 
         return content
 
 
     def get_context_data(self, **kwargs):
-        print('tp 2281b15', 'self=', self)
-        print('tp 2281b16', 'self.kwargs=', self.kwargs)
-        print('tp 2281b17', 'kwargs=', kwargs)
         
         context_data = super().get_context_data(**kwargs)
-        context_data['placements'] = self.object.placement_set.all()
+        all_placements = self.object.placement_set.all()
+        context_data['placements'] = []
         context_data['menu_items'] = []
-        if 'placement_pk' in self.kwargs:
-            context_data['chosen_placement'] = Placement.objects.get(pk=self.kwargs.get('placement_pk'))
-        for placement in context_data['placements']:
-            context_data['menu_items'].append(placement)
 
-            placement.element.content = self.process_content(placement)
+        context_data['chosen_placement'] = 0
+        if 'placement_pk' in self.kwargs:
+            print('tp2281e43', self.kwargs.get('placement_pk'))
+            context_data['chosen_placement'] = self.kwargs.get('placement_pk')
+
+        for placement in all_placements:
+            if placement.level > 1:
+                context_data['menu_items'].append(placement)
+
+            if ( placement.level == 2 and context_data['chosen_placement'] == 0 ) or placement.pk == context_data['chosen_placement']:
+                print('tp2281e47')
+                placement.element.content = self.process_content(placement)
+                context_data['placements'].append(placement)
 
         return context_data
         

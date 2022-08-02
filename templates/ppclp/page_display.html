@@ -12,12 +12,14 @@
 {% endfor %}
 {% endblock %}
 {% block content %}
+
     {% for placement in placements %}
-        {% if chosen_placement == placement or not chosen_placement %}
+
+
         <div class="placement">
             <h{{ placement.level }}>{{ placement.element.title }}</h{{ placement.level }}>
             {{ placement.element.content | safe }}
         </div>
-        {% endif %}
+
     {% endfor %}
 {% endblock %}

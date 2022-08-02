@@ -60,14 +60,14 @@ class Placement(models.Model):
     level = models.PositiveSmallIntegerField(
         "level",
         default=2,
-        help_text = 'The heading level of this element, corresponding to the html tags &lt;h2&gt; - &lt;h6&gt;.  Note: The default is 2. &lt;h1&gt; is used for the page title.  Levels lower  than 2 are hidden from the menu'
+        choices=((2,"h2"), (3,"h3"),(4,"h4"),(5,"h5"),(6,"h6")),
+        help_text = 'The heading level of this element, corresponding to the html tags &lt;h2&gt; - &lt;h6&gt;.  Only use 2 - 6.  &lt;h1&gt; is used for the page title. '
     )
-
-    @property
-    def is_hidden(self):
-        if self.level < 2:
-            return True
-        return False
+    is_hidden = models.BooleanField(
+        "hidden",
+        default=False,
+        help_text="If this placement should not appear in the menubar or in the listing of all elements."
+    )
 
     def __str__(self):
         element = self.element.__str__() if hasattr(self, 'element') else ''

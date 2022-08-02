@@ -35,7 +35,7 @@ class PageDisplay(DetailView):
                     else:
                         content = content.replace(header_tag + i_str + '>', header_tag + header_level_str + '><div class="content-block">')
 
-        subplacements = placement.page.placement_set.filter(order__gt=placement.order)
+        subplacements = placement.page.placement_set.filter(order__gt=placement.order).filter(is_hidden=placement.is_hidden)
         if subplacements.exists():
              if subplacements.first().level == placement.level + 1:
                 for subplacement in subplacements:
@@ -65,10 +65,10 @@ class PageDisplay(DetailView):
             context_data['chosen_placement'] = self.kwargs.get('placement_pk')
 
         for placement in all_placements:
-            if placement.level > 1:
+            if not placement.is_hidden:
                 context_data['menu_items'].append(placement)
 
-            if ( placement.level == 2 and context_data['chosen_placement'] == 0 ) or placement.pk == context_data['chosen_placement']:
+            if ( placement.level == 2 and context_data['chosen_placement'] == 0 and not placement.is_hidden ) or placement.pk == context_data['chosen_placement']:
                 print('tp2281e47')
                 placement.element.content = self.process_content(placement)
                 context_data['placements'].append(placement)

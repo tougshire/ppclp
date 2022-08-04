@@ -6,9 +6,8 @@ class Page(models.Model):
         max_length=50,
         help_text="The name of the page"
     )
-    slug = models.CharField(
+    slug = models.SlugField(
         "slug",
-        max_length=50,
         help_text="The URL slug"
     )
 

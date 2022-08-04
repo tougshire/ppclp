@@ -8,6 +8,7 @@ class Page(models.Model):
     )
     slug = models.SlugField(
         "slug",
+        unique=True,
         help_text="The URL slug"
     )
 

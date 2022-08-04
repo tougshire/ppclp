@@ -1,11 +1,11 @@
-from concurrent.futures import process
 from django import views
 from django.views.generic import DetailView
+from django.views.generic.edit import UpdateView
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Element, Page, Placement
 import markdown
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 class PageDisplay(DetailView):
     model = Page
@@ -55,6 +55,37 @@ class PageDisplay(DetailView):
     def get_context_data(self, **kwargs):
         
         context_data = super().get_context_data(**kwargs)
+        all_placements = self.object.placement_set.all()
+        context_data['placements'] = []
+        context_data['menu_items'] = []
+
+        context_data['chosen_placement'] = 0
+        if 'placement_pk' in self.kwargs:
+            print('tp2281e43', self.kwargs.get('placement_pk'))
+            context_data['chosen_placement'] = self.kwargs.get('placement_pk')
+
+        for placement in all_placements:
+            if not placement.is_hidden:
+                context_data['menu_items'].append(placement)
+
+            if ( placement.level == 2 and context_data['chosen_placement'] == 0 and not placement.is_hidden ) or placement.pk == context_data['chosen_placement']:
+                print('tp2281e47')
+                placement.element.content = self.process_content(placement)
+                context_data['placements'].append(placement)
+
+        return context_data
+        
+
+class PageUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required='change_page'
+    model = Page
+    template_name = 'ppclp/page_form.html'
+    
+
+    def get_context_data(self, **kwargs):
+        
+        context_data = super().get_context_data(**kwargs)
+        context_data['page'] = self.form.object
         all_placements = self.object.placement_set.all()
         context_data['placements'] = []
         context_data['menu_items'] = []

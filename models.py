@@ -11,6 +11,12 @@ class Page(models.Model):
         unique=True,
         help_text="The URL slug"
     )
+    cover_photo = models.ImageField(
+        "Cover Photo",
+        null=True,
+        blank=True,
+        help_text='The cover photo for this page'
+    )
 
     def __str__(self):
         return self.name

@@ -8,7 +8,8 @@
 	</head>
 	<body>
 		<div id="div_header">
-			<img src="{% static 'ppclp/ppclp_banner.png' %}">
+			{% comment %} <img src="{% static 'ppclp/ppclp_banner.png' %}">{% endcomment %}
+			<img src="{{ page.cover_photo.url }}">
 		</div>
 		<h1>Suffolk Public Library Public PC: {% block pagename %}{% endblock %}</h1>
 		<div id="div_sidebar">

@@ -69,7 +69,6 @@ class PageDisplay(DetailView):
                 context_data['menu_items'].append(placement)
 
             if ( placement.level == 2 and context_data['chosen_placement'] == 0 and not placement.is_hidden ) or placement.pk == context_data['chosen_placement']:
-                print('tp2281e47')
                 placement.element.content = self.process_content(placement)
                 context_data['placements'].append(placement)
 
@@ -100,7 +99,6 @@ class PageUpdate(PermissionRequiredMixin, UpdateView):
                 context_data['menu_items'].append(placement)
 
             if ( placement.level == 2 and context_data['chosen_placement'] == 0 and not placement.is_hidden ) or placement.pk == context_data['chosen_placement']:
-                print('tp2281e47')
                 placement.element.content = self.process_content(placement)
                 context_data['placements'].append(placement)
 
